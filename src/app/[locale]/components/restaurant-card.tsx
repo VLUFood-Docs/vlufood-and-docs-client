@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { MapPin, StarIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-import HeroGif from '!/images/hero.gif'
+import HeroGif from '@/public/images/hero.gif'
 import { Restaurant } from '@/types/restaurant'
 import { useRouter } from 'next/navigation'
 

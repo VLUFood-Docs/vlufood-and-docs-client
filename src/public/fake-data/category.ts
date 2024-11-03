@@ -4,7 +4,7 @@ function generateCategory(num: number): Category[] {
   const categories: Category[] = []
   for (let i = 0; i < num; i++) {
     categories.push({
-      id: i,
+      id: 'i',
       name: 'Fast Food',
       image: '/images/hero.gif',
     })

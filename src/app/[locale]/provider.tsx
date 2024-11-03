@@ -2,6 +2,7 @@
 
 import type { ReactNode } from 'react'
 import { I18nProviderClient } from '../../locales/client'
+import { SessionProvider } from 'next-auth/react'
 
 type ProviderProps = {
   locale: string
@@ -10,8 +11,10 @@ type ProviderProps = {
 
 export function Provider({ locale, children }: ProviderProps) {
   return (
-    <I18nProviderClient locale={locale} fallback={<p>Loading...</p>}>
-      {children}
-    </I18nProviderClient>
+    <SessionProvider>
+      <I18nProviderClient locale={locale} fallback={<p>Loading...</p>}>
+        {children}
+      </I18nProviderClient>
+    </SessionProvider>
   )
 }

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import Image from 'next/image'
 
-import HeroGif from '!/images/hero.gif'
+import HeroGif from '@/public/images/hero.gif'
 import { Category } from '@/types/category'
 import { cn } from '@/lib/utils'
 

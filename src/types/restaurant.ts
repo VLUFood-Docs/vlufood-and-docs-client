@@ -1,7 +1,7 @@
 import { Category } from './category'
 
 interface Restaurant {
-  id?: number
+  id?: string
   name?: string
   description?: string
   rating?: number

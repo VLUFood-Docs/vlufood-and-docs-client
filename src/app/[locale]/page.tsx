@@ -3,19 +3,19 @@
 import { useEffect, useState } from 'react'
 
 import Image from 'next/image'
-import HeroGif from '!/images/hero.gif'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import HeroGif from '@/public/images/hero.gif'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useI18n } from '@/locales/client'
 import { cn } from '@/lib/utils'
 import SearchBar from '@/components/search-bar'
 import { Button } from '@/components/ui/button'
 import RestaurantCard from './components/restaurant-card'
-import { generateRestaurant } from '!/fake-data/restaurant'
+import { generateRestaurant } from '@/public/fake-data/restaurant'
 import CategoryCard from './components/category-card'
-import { generateCategory } from '!/fake-data/category'
+import { generateCategory } from '@/public/fake-data/category'
 
-import IntroduceImage1 from '!/images/introduce-1.png'
-import IntroduceImage2 from '!/images/introduce-2.png'
+import IntroduceImage1 from '@/public/images/introduce-1.png'
+import IntroduceImage2 from '@/public/images/introduce-2.png'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 import Label from '@/components/label'
@@ -29,9 +29,6 @@ function GreetingCard({ className }: { className?: string }) {
         <CardTitle className="text-3xl font-serif w-full text-justify font-extralight">{t('greetingCard.title')}</CardTitle>
         <SearchBar />
       </CardContent>
-      <CardFooter>
-        <Button className="w-full">Tìm kiếm</Button>
-      </CardFooter>
     </Card>
   )
 }

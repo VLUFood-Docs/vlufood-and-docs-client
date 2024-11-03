@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { AppProvider } from './app-provider'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
 
 export const metadata: Metadata = {
   title: 'VLUFood & Docs | Đặt món ngay tại lớp học',
@@ -20,6 +22,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`antialiased`}>
         <AppProvider locale={locale}>{children}</AppProvider>
+        <ToastContainer />
       </body>
     </html>
   )

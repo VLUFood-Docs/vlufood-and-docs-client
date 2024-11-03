@@ -1,7 +1,7 @@
 import { Food } from './food'
 
 interface Category {
-  id?: number
+  id?: string
   name?: string
   image?: string
   foods?: Food[]
