@@ -7,13 +7,20 @@ function generateRestaurant({ number }: { number: number }) {
   for (let i = 0; i < number; i++) {
     foods.push({
       id: 'i',
-      name: "Mc-Donald's - Thái Hà",
-      description: 'Gà rán, Burger, Cơm - Món quốc tế',
+      restaurantName: "Mc-Donald's - Thái Hà",
+      restaurantDescription: 'Gà rán, Burger, Cơm - Món quốc tế',
       rating: 4.4,
       time: '20 phút',
       distance: '200m',
       image: '/images/hero.gif',
-      promo: i % 2 === 0,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      email: '',
+      emailVerified: new Date(),
+      restaurantAddress: 'Số 1 Thái Hà, Đống Đa, Hà Nội',
+      restaurantPhone: '0123456789',
+      restaurantType: 'Fast Food',
+      name: 'Mc-Donald',
     })
   }
   return foods
