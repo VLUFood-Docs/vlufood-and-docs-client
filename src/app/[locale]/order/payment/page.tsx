@@ -21,6 +21,7 @@ export default function PaymentPage() {
   const deliveryFee = (totalCost * 10) / 100
   const serviceFee = (totalCost * 3) / 100
   if (!shoppingCart || shoppingCart.length == 0 || !setShoppingCart) redirect('/')
+  if (!session) redirect('/login')
 
   return (
     <main className="w-screen h-screen flex items-center justify-center">
@@ -61,6 +62,10 @@ export default function PaymentPage() {
             <Button
               variant="destructive"
               onClick={async () => {
+                if (!address) {
+                  toast.error('Vui lòng chọn địa chỉ giao hàng!')
+                  return
+                }
                 await fetch('/api/shipping-order', {
                   method: 'POST',
                   body: JSON.stringify({
@@ -69,7 +74,7 @@ export default function PaymentPage() {
                     items: shoppingCart,
                   }),
                 }).then(async res => {
-                  if (res.status !== 200) {
+                  if (res.status !== 201) {
                     toast.error('Đã có lỗi xảy ra!')
                     return
                   }

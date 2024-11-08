@@ -1,16 +1,19 @@
 'use client'
 
 import React from 'react'
-import { RestaurantContext } from './restaurant-provider'
 import { RestaurantBreadcrumb } from './components/breadcrumb'
 import Label from '@/components/label'
 import { MapPin, StarIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import FoodCard from './components/food-card'
+import { useRestaurantStore } from '@/hooks/use-restaurant-store'
+import { useParams } from 'next/navigation'
+import { Restaurant } from '@/types/restaurant'
+import { Category } from '@/types/category'
 
 export default function ViewRestaurant() {
-  const context = React.useContext(RestaurantContext)
-  const restaurant = context?.restaurant
+  const { id } = useParams<{ id: string }>()
+  const restaurant = useRestaurantStore(state => state.restaurants.find(restaurant => restaurant.id === id)) as Restaurant | undefined
   const [currentCategoryIndex, setCurrentCategoryIndex] = React.useState(0)
 
   // Tạo refs cho từng danh mục
@@ -48,29 +51,27 @@ export default function ViewRestaurant() {
       <div className="shadow-md px-[50px] py-[25px]">
         <RestaurantBreadcrumb />
         <div className="flex justify-start w-full flex-col">
-          <Label>{restaurant.name}</Label>
-          <Label size="body">{restaurant.description}</Label>
+          <Label>{restaurant.restaurantName}</Label>
+          <Label size="body">{restaurant.restaurantDescription}</Label>
           <div className="flex gap-20">
             <div className="flex gap-2 items-center">
               <Label size="subheading" className="text-yellow-400">
                 <StarIcon />
               </Label>
-              <Label size="body">{restaurant.rating}</Label>
+              <Label size="body">5.0</Label>
             </div>
             <div className="flex gap-2 items-center">
               <Label size="subheading" className="text-red-400">
                 <MapPin />
               </Label>
-              <Label size="body">
-                {restaurant.distance} - {restaurant.time}
-              </Label>
+              <Label size="body">15 phút - 500m</Label>
             </div>
           </div>
         </div>
         <div className="w-full px-[50px] overflow-x-auto justify-center flex">
           {restaurant.categories?.map((category, index) => {
             return (
-              <Button variant="ghost" key={category.id} onClick={() => scrollToCategory(index)}>
+              <Button variant="ghost" key={index} onClick={() => scrollToCategory(index)}>
                 <Label
                   size="body"
                   className={currentCategoryIndex === index ? 'text-green-500' : 'text-black'} // Thay đổi màu chữ
@@ -82,7 +83,7 @@ export default function ViewRestaurant() {
           })}
         </div>
       </div>
-      {restaurant?.categories?.map((category, index) => {
+      {restaurant?.categories?.map((category: Category, index) => {
         return (
           <div
             ref={el => {

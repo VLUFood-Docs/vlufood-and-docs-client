@@ -10,7 +10,6 @@ import { cn } from '@/lib/utils'
 import SearchBar from '@/components/search-bar'
 import { Button } from '@/components/ui/button'
 import RestaurantCard from './components/restaurant-card'
-import { generateRestaurant } from '@/public/fake-data/restaurant'
 import CategoryCard from './components/category-card'
 import { generateCategory } from '@/public/fake-data/category'
 
@@ -19,6 +18,8 @@ import IntroduceImage2 from '@/public/images/introduce-2.png'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 import Label from '@/components/label'
+import { useRestaurantStore } from '@/hooks/use-restaurant-store'
+import { generateRestaurant } from '@/public/fake-data/restaurant'
 
 function GreetingCard({ className }: { className?: string }) {
   const t = useI18n()
@@ -39,10 +40,12 @@ export default function Home() {
   const [isExpandedRestaurant, setIsExpandedRestaurant] = useState(false)
 
   // fakeFoods
-  const numberOfRestaurant = isExpandedRestaurant ? 20 : 6
-  const restaurants = generateRestaurant({ number: numberOfRestaurant })
+  const realRestaurants = useRestaurantStore(state => state.restaurants)
+  const fakeRestaurants = generateRestaurant({ number: 15 })
+
+  const restaurants = [...realRestaurants, ...fakeRestaurants]
   // fakeCategories
-  const categories = generateCategory(20)
+  const categories = generateCategory()
 
   const handleScroll = () => {
     setHeaderVisible(window.scrollY > 50)
@@ -69,7 +72,7 @@ export default function Home() {
           <div
             className={`w-full ${
               isExpandedRestaurant
-                ? 'grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 pt-4 justify-center '
+                ? 'grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 pt-4 justify-center'
                 : 'overflow-x-auto flex gap-2 pt-4 justify-start scroll-smooth'
             }`}
           >
@@ -85,9 +88,9 @@ export default function Home() {
           <Label className="text-right font-thin" size="subheading">
             {t('categories.title')}
           </Label>
-          <div className="w-full grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-4 justify-center">
-            {categories.map(category => (
-              <CategoryCard key={category.id} category={category} />
+          <div className="w-full grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 pt-4 justify-center">
+            {categories.map((category, index) => (
+              <CategoryCard key={index} category={category} />
             ))}
           </div>
         </div>
