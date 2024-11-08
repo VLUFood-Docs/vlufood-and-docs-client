@@ -1,15 +1,8 @@
-import { Category } from './category'
+import { Category, Food, User as PrismaRestaurant } from '@prisma/client'
 
-interface Restaurant {
-  id?: string
-  name?: string
-  description?: string
-  rating?: number
-  time?: string
-  distance?: string
-  image?: string
-  promo?: boolean
-  categories?: Category[]
+interface Restaurant extends PrismaRestaurant {
+  foods: Food[]
+  categories: Category[]
 }
 
 export type { Restaurant }

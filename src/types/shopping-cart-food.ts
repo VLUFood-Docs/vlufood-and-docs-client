@@ -1,4 +1,5 @@
 interface ShoppingCardFood {
+  restaurantId: string
   id: string
   name: string
   description: string

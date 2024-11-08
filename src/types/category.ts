@@ -1,10 +1,9 @@
-import { Food } from './food'
+import { Food, Category as PrismaCategory } from '@prisma/client'
+import { StaticImageData } from 'next/image'
 
-interface Category {
-  id?: string
-  name?: string
-  image?: string
+interface Category extends PrismaCategory {
   foods?: Food[]
+  image?: StaticImageData
 }
 
 export type { Category }
