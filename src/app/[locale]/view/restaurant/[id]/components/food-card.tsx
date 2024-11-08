@@ -1,12 +1,12 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { cn, formatPrice } from '@/lib/utils'
-import { Food } from '@/types/food'
 import { PlusIcon } from 'lucide-react'
 import Image from 'next/image'
 
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+// import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+
 import Label from '@/components/label'
 import { Button } from '@/components/ui/button'
 import React from 'react'
@@ -14,6 +14,8 @@ import ShoppingCartSheet from './shopping-cart-sheet'
 import { AppContext } from '@/app/[locale]/app-provider'
 import { ShoppingCardFood } from '@/types/shopping-cart-food'
 import { toast } from 'react-toastify'
+import { Food } from '@prisma/client'
+import DefaultFoodImage from '@/public/images/default-food-image.jpg'
 
 interface FoodCardType {
   className?: string
@@ -30,24 +32,24 @@ export default function FoodCard({ className, food }: FoodCardType) {
       <ShoppingCartSheet open={shoppingCardOpen} setOpen={setShoppingCardOpen} />
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger>
-          <Card className={cn('min-w-[500px] w-[500px] max-h-[200px] h-[200px] relative cursor-pointer', className)}>
+          <Card className={cn('min-w-[400px] w-[400px] max-h-[150px] h-[150px] relative cursor-pointer', className)}>
             <div className="absolute bottom-2 right-2">
               <PlusIcon className="w-[48px] h-[48px] hover:bg-green-900 hover:w-[52px] hover:h-[52px] rounded-full bg-green-500 text-white" />
             </div>
-            <CardContent className="flex gap-2 items-center justify-center">
+            <CardContent className="p-0 flex gap-0.5">
               <Image
-                src={food?.images?.[0] || ''}
+                src={DefaultFoodImage}
                 alt="Hình ảnh thức ăn"
                 width={150}
                 height={150}
                 className="w-[150px] h-[150px] object-cover rounded-sm"
               />
-              <div className="flex flex-col gap-2 w-[280px] justify-between h-full">
+              <div className={`flex flex-col w-[250px] max-w-[250px]`}>
                 <div className="w-full">
-                  <p className="truncate text-3xl font-medium ">{food?.name}</p>
-                  <p className="text-sm text-gray-500 h-[70px] line-clamp-3">{food?.description}</p>
+                  <p className="truncate text-lg text-left">{food?.name}</p>
+                  <p className="text-sm text-gray-500 h-[70px] line-clamp-3 truncate">{food?.description}</p>
                 </div>
-                <p className="text-left font-bold">{formatPrice(food?.price || 0)}</p>
+                <p className="text-left font-bold">Giá: {formatPrice(food?.price || 0)}</p>
               </div>
             </CardContent>
           </Card>
@@ -57,7 +59,14 @@ export default function FoodCard({ className, food }: FoodCardType) {
             <DialogTitle className="text-center text-3xl font-thin">{food?.name}</DialogTitle>
             <DialogDescription>{food?.description}</DialogDescription>
           </DialogHeader>
-          <Carousel className="w-[300px] flex items-center">
+          <Image
+            src={DefaultFoodImage}
+            alt="Hình ảnh thức ăn"
+            width={300}
+            height={300}
+            className="w-[300px] h-[300px] object-cover rounded-sm"
+          />
+          {/* <Carousel className="w-[300px] flex items-center">
             <CarouselContent>
               {food?.images?.map((image, index) => {
                 return (
@@ -75,7 +84,7 @@ export default function FoodCard({ className, food }: FoodCardType) {
             </CarouselContent>
             <CarouselPrevious />
             <CarouselNext />
-          </Carousel>
+          </Carousel> */}
           <Label size="subheading">{formatPrice(food?.price || 0)}</Label>
           <div className="w-full flex justify-between">
             <Button
@@ -88,6 +97,7 @@ export default function FoodCard({ className, food }: FoodCardType) {
                 }
                 setShoppingCart(prev => {
                   const newItem: ShoppingCardFood = {
+                    restaurantId: food?.userId || '',
                     id: food?.id || '',
                     name: food?.name || '',
                     description: food?.description || '',
@@ -111,6 +121,7 @@ export default function FoodCard({ className, food }: FoodCardType) {
                 }
                 setShoppingCart(() => {
                   const newItem: ShoppingCardFood = {
+                    restaurantId: food?.userId || '',
                     id: food?.id || '',
                     name: food?.name || '',
                     description: food?.description || '',

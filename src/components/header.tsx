@@ -21,6 +21,7 @@ import EditCard from '@/app/[locale]/view/restaurant/[id]/components/edit-card'
 import { AppContext } from '@/app/[locale]/app-provider'
 import React from 'react'
 import { toast } from 'react-toastify'
+import ChangeLangBtn from './lang-btn'
 
 export default function Header({ className }: { className?: string }) {
   const [open, setOpen] = React.useState(false)
@@ -37,6 +38,7 @@ export default function Header({ className }: { className?: string }) {
       </p>
       <SearchBar />
       <div className="flex gap-2 items-center">
+        <ChangeLangBtn />
         <DropdownMenu open={open} onOpenChange={setOpen}>
           <DropdownMenuTrigger>
             <ShoppingBagIcon className="w-[64px] h-[64px] border-slate-400 border-solid border-[1px] text-black p-2 rounded-sm cursor-pointer" />
@@ -56,6 +58,10 @@ export default function Header({ className }: { className?: string }) {
               variant="destructive"
               onClick={() => {
                 setOpen(false)
+                if (!session) {
+                  toast.error('Vui lòng đăng nhập để thanh toán!')
+                  return
+                }
                 if (!shoppingCart || shoppingCart.length == 0) {
                   toast.error('Giỏ hàng của bạn đang trống!')
                   return
@@ -94,7 +100,9 @@ export default function Header({ className }: { className?: string }) {
           </>
         ) : (
           <>
-            <Button variant="outline">{t('logInOutBtn')}</Button>
+            <Button variant="outline" onClick={() => router.push('/auth/sign-in')}>
+              {t('logInOutBtn')}
+            </Button>
           </>
         )}
       </div>
