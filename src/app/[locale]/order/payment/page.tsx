@@ -75,6 +75,10 @@ export default function PaymentPage() {
                   }),
                 }).then(async res => {
                   if (res.status !== 201) {
+                    if (res.status === 400) {
+                      toast.error('Vui lòng đăng nhập để đặt hàng!')
+                      redirect('/auth/sign-in')
+                    }
                     toast.error('Đã có lỗi xảy ra!')
                     return
                   }
