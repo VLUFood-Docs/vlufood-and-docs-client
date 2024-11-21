@@ -104,6 +104,8 @@ export default function FoodCard({ className, food }: FoodCardType) {
                     quantity: 1,
                     price: food?.price || 0,
                   }
+                  // Lưu vào localStorage để giữ giỏ hàng khi reload trang
+                  localStorage.setItem('shoppingCart', JSON.stringify([...prev, newItem]))
                   return [...prev, newItem]
                 })
                 toast.success('Đã thêm vào giỏ hàng!')

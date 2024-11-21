@@ -6,7 +6,9 @@ export default async function Layout({ children }: { params: Promise<{ locale: s
   return (
     <div>
       <main className="w-full flex flex-col justify-between h-screen">
-        <Header />
+        <div className="sticky top-0 z-50">
+          <Header />
+        </div>
         {children}
         <Footer />
       </main>

@@ -16,7 +16,7 @@ export default async function TrackingPage({ params }: { params: Promise<{ id: s
       <Header />
       <div className="flex flex-col justify-center items-center">
         <Label size="subheading">Đang tìm người giao hàng cho bạn...</Label>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center pb-2">
           <Image src={FindDelivery} alt="Tìm giao hàng" className="w-[358px] h-[242px]" width={358} height={242} />
           <div>
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="131" viewBox="0 0 28 131" fill="none">

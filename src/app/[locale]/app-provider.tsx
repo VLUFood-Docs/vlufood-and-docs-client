@@ -20,6 +20,14 @@ export const AppProvider = ({ children, locale }: { children: React.ReactNode; l
   const setRestaurants = useRestaurantStore(state => state.setRestaurants)
 
   useEffect(() => {
+    const localAddress = localStorage.getItem('address')
+    const localShoppingCart = localStorage.getItem('shoppingCart')
+    if (localAddress) {
+      setAddress(localAddress)
+    }
+    if (localShoppingCart) {
+      setShoppingCart(JSON.parse(localShoppingCart))
+    }
     const fetchData = async () => {
       const restaurants = await fetch(`/api/restaurants`)
       setRestaurants(await restaurants.json())

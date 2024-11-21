@@ -86,6 +86,8 @@ export default function PaymentPage() {
                   toast.success('Đặt hàng thành công! Đang chuyển hướng đến trang theo dõi đơn hàng...')
                   setShoppingCart([])
                   setTimeout(() => {
+                    // Xóa giỏ hàng khỏi localStorage
+                    localStorage.removeItem('shoppingCart')
                     router.push(`/order/tracking/${data.id}`)
                   }, 2000)
                 })

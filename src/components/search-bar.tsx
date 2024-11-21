@@ -11,9 +11,13 @@ import { AppContext } from '@/app/[locale]/app-provider'
 import { toast } from 'react-toastify'
 
 const building = [
-  { name: 'A', floors: ['1', '2', '3', '4', '5', '6'], rooms: ['01', '02', '03'] },
-  { name: 'F', floors: ['1', '2', '3', '4', '5', '6', '7', '08', '09', '10', '11', '12'], rooms: ['01', '02', '03', '04', '05', '06'] },
-  { name: 'G', floors: ['8', '9', '10', '11', '12'], rooms: ['01', '02', '03'] },
+  { name: 'A', floors: ['01', '02', '03', '04', '05', '06'], rooms: ['01', '02', '03'] },
+  {
+    name: 'F',
+    floors: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
+    rooms: ['01', '02', '03', '04', '05', '06'],
+  },
+  { name: 'G', floors: ['08', '09', '10', '11', '12'], rooms: ['01', '02', '03'] },
 ]
 
 export default function SearchBar() {
@@ -82,7 +86,11 @@ export default function SearchBar() {
               className="w-full"
               onClick={() => {
                 toast.success('Đã chọn địa chỉ!')
-                if (setAddress) setAddress(`${selectedBuilding.name}-${selectedFloor}-${selectedRoom}`)
+                if (setAddress) {
+                  setAddress(`${selectedBuilding.name}-${selectedFloor}-${selectedRoom}`)
+                  // Lưu vào localStorage để giữ địa chỉ khi reload trang
+                  localStorage.setItem('address', `${selectedBuilding.name}-${selectedFloor}-${selectedRoom}`)
+                }
               }}
             >
               Xác nhận
