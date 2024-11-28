@@ -21,6 +21,7 @@ function generateRestaurant({ number }: { number: number }) {
       restaurantPhone: '0123456789',
       restaurantType: 'Fast Food',
       name: 'Mc-Donald',
+      storeId: [],
     })
   }
   return foods
