@@ -5,7 +5,7 @@ import { cn, formatPrice } from '@/lib/utils'
 import { useI18n } from '@/locales/client'
 import { ShoppingBagIcon } from 'lucide-react'
 import SearchBar from './search-bar'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { useSession, signOut } from 'next-auth/react'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 
@@ -66,6 +66,14 @@ export default function Header({ className }: { className?: string }) {
                   toast.error('Giỏ hàng của bạn đang trống!')
                   return
                 }
+                if (!context?.address) {
+                  toast.error('Vui lòng nhập địa chỉ giao hàng!')
+                  return
+                }
+                if (!context?.phone) {
+                  toast.error('Vui lòng nhập số điện thoại!')
+                  redirect('/account')
+                }
                 router.push('/order/payment')
               }}
             >
@@ -85,11 +93,14 @@ export default function Header({ className }: { className?: string }) {
               <DropdownMenuContent>
                 <DropdownMenuLabel>Tài khoản của tôi</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Thông tin cá nhân</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push('/account')}>Thông tin cá nhân</DropdownMenuItem>
                 <DropdownMenuItem>Danh sách đơn hàng</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={() => {
+                    localStorage.removeItem('address')
+                    localStorage.removeItem('phone')
+                    localStorage.removeItem('shoppingCart')
                     signOut({ redirectTo: '/auth/sign-in' })
                   }}
                 >

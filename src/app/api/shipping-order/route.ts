@@ -16,9 +16,9 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const body = await req.json()
-  const { name, address, items } = body
+  const { name, address, items, phone } = body
 
-  if (!name || !address || !items) {
+  if (!name || !address || !items || !phone) {
     return new Response(JSON.stringify({ error: 'Invalid request' }), { status: 400 })
   }
 
@@ -26,6 +26,7 @@ export async function POST(req: Request) {
     data: {
       generatedId: await generateId({ type: 'food', restaurantId: items[0].restaurantId }),
       customerName: name,
+      customerPhone: phone,
       customerAddress: address,
       user: { connect: { id: items[0].restaurantId } },
       items: {

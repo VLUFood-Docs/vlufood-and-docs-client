@@ -16,6 +16,7 @@ export default function PaymentPage() {
   const shoppingCart = context?.shoppingCart
   const setShoppingCart = context?.setShoppingCart
   const address = context?.address
+  const phone = context?.phone
   const totalCost = shoppingCart?.reduce((acc, item) => acc + item.price * item.quantity, 0)
   if (totalCost === undefined) return
   const deliveryFee = (totalCost * 10) / 100
@@ -66,11 +67,17 @@ export default function PaymentPage() {
                   toast.error('Vui lòng chọn địa chỉ giao hàng!')
                   return
                 }
+                if (!phone) {
+                  toast.error('Vui lòng nhập số điện thoại!')
+                  redirect('/account')
+                }
+
                 await fetch('/api/shipping-order', {
                   method: 'POST',
                   body: JSON.stringify({
                     name: session.data?.user?.name,
                     address: address,
+                    phone: phone,
                     items: shoppingCart,
                   }),
                 }).then(async res => {
